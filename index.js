@@ -1,8 +1,8 @@
-import app from "./app.js";
-import { connectDB } from "./db.js";
+const express = require("express");
+const app = express();
 
-connectDB();
-app.listen(3001);
-console.log("Server on port 3001");
+app.get("/", (req, res) => res.send("Express on Vercel"));
+
+app.listen(3000, () => console.log("Server ready on port 3000."));
 
 export default app;
