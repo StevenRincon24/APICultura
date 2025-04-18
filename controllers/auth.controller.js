@@ -52,7 +52,7 @@ export const login = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "None",
-      maxAge: 1000 * 60 * 60, // 1 hora, por ejemplo
+      maxAge: 1000 * 60 * 60,
     });
     res.json({
       id: userFound._id,
@@ -65,7 +65,12 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.cookie("token", "", { expires: new Date(0) });
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    expires: new Date(0),
+  });
   return res.sendStatus(200);
 };
 
