@@ -1,7 +1,6 @@
 import app from "./app.js";
-import {connectDB} from "./db.js"   
+import { connectDB } from "./db.js";
 
-connectDB()
-app.listen(3001);
+connectDB();
 
-console.log("Server running on port 3001");
+export default app;
