@@ -6,7 +6,8 @@ import {
   profile,
   verifyToken,
 } from "../controllers/auth.controller.js";
-import { authRequired } from "../middlewares/validatetoken.js";
+import { authRequired } from "../middlewares/validateToken.js";
+
 const router = Router();
 
 router.post("/registro", registro);
