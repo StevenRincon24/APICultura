@@ -6,6 +6,7 @@ const hotelSchema = new mongoose.Schema({
   description: { type: String, required: true, trim: true },
   website: { type: String, required: false, trim: true },
   contact: { type: String, required: true, trim: true },
+  image: { type: String },
 });
 
 export default mongoose.model("Hotels", hotelSchema);

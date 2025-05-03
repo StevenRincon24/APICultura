@@ -1,3 +1,5 @@
+import slugify from "slugify";
+
 import Hotels from "../models/hotels.models.js";
 
 // FUNCION PARA OBTENER LOS HOTELES
@@ -9,26 +11,27 @@ export const getHotels = async (req, res) => {
 // FUNCION PARA AGREGAR UN NUEVO HOTEL
 export const createHotel = async (req, res) => {
   try {
-    const { name, description, location, website, contact } = req.body;
-    if (!name || !description || !location || !website || !contact) {
-      return res
-        .status(400)
-        .json({ message: "Todos los campos son obligatorios" });
-    }
+    const { name, location, description, website, contact } = req.body;
+
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
 
     const newHotel = new Hotels({
       name,
-      description,
       location,
+      description,
       website,
       contact,
+      image: imagePath, // Guarda la ruta relativa de la imagen
     });
+
     await newHotel.save();
 
-    res.json({ message: "Hotel agregado exitosamente" });
+    res.status(201).json({
+      message: "Hotel creado exitosamente",
+      ...newHotel._doc,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al agregar el hotel" });
+    res.status(500).json({ message: "Error al crear el hotel", error });
   }
 };
 
@@ -46,16 +49,40 @@ export const getHotel = async (req, res) => {
 
 // FUNCION PARA MODIFICAR LA INFORMACION DE UN HOTEL
 export const updateHotel = async (req, res) => {
-  console.log(req.body);
   try {
-    const hotel = await Hotels.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+    const { name, location, description, website, contact } = req.body;
+
+    // Construir objeto de actualización
+    const updateData = {
+      name,
+      location,
+      description,
+      website,
+      contact,
+    };
+
+    // Si se envió una nueva imagen, agregarla al objeto
+    if (req.file) {
+      updateData.image = `/uploads/${req.file.filename}`;
+    }
+
+    const updatedHotel = await Hotels.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedHotel) {
+      return res.status(404).json({ message: "Hotel no encontrado" });
+    }
+
+    res.json({
+      message: "Hotel actualizado correctamente",
+      ...updatedHotel._doc,
     });
-    if (!hotel) return res.status(404).json({ message: "Hotel no encontrado" });
-    res.json(hotel);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error al actualizar el hotel" });
+    res.status(500).json({ message: "Error al actualizar el hotel", error });
   }
 };
 

@@ -68,6 +68,9 @@ export const logout = (req, res) => {
   res.cookie("token", "", {
     httpOnly: true,
     secure: true,
+    // PARA LOCALHOST
+    // secure: false,
+
     sameSite: "none",
     expires: new Date(0),
   });
