@@ -8,12 +8,13 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 // Obtener la ruta del directorio donde se encuentra el archivo actual
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
 // Servir archivos estáticos desde la carpeta 'uploads'
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
