@@ -47,6 +47,7 @@ export const login = async (req, res) => {
       return res.status(404).json(["Datos invalidos,  intente nuevamente"]);
 
     const token = await tokenAcceso({ id: userFound._id });
+    console.log(token);
 
     res.cookie("token", token, {
       httpOnly: true,
