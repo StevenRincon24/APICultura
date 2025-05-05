@@ -22,7 +22,7 @@ app.use(
       "http://localhost:5174",
       "http://localhost:5173",
       "https://cultura-nobsa.vercel.app",
-      "http://170.187.203.229",
+      "http://170.187.203.229:3001",
     ],
     credentials: true,
   })
