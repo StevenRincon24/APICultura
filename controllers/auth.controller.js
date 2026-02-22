@@ -51,8 +51,8 @@ export const login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "Lax",
+      secure: true,
+      sameSite: "None",
       maxAge: 1000 * 60 * 60,
     });
     res.json({
@@ -68,10 +68,8 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   res.cookie("token", "", {
     httpOnly: true,
-    secure: false,
-    // PARA LOCALHOST
-    // secure: false,
-    sameSite: "Lax",
+    secure: true,
+    sameSite: "None",
     expires: new Date(0),
   });
   return res.sendStatus(200);
